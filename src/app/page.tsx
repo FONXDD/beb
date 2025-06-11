@@ -4,7 +4,7 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
 
-import { products } from '@/generated/prisma'
+import { Products } from '@/generated/prisma'
 export default function Home() {
   const [products, setProducts] = useState<Products[]>([])
   useEffect(() => {
