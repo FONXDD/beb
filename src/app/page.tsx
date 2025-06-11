@@ -2,15 +2,11 @@
 import axios from 'axios';
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
-export default function Home() {
 
-interface DataType {
-    id : Number;
-    name : String;
-    price : String;
-    image : String;
-}
-const [products, setProducts] = useState<DataType[]>([])
+
+import { products } from '@/generated/prisma'
+export default function Home() {
+  const [products, setProducts] = useState<Products[]>([])
   useEffect(() => {
     (async() => {
         const products = await axios.get('/api/products')
@@ -19,15 +15,16 @@ const [products, setProducts] = useState<DataType[]>([])
         }
     })()
   }, [])
+
   return (
     <>
       <Head>
-        <title>Sinsamuth - Home</title>
+        <title>MOTOINFO - Home</title>
       </Head>
 
       <header className="bg-white shadow-md">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-blue-600">Sinsamuth</h1>
+          <h1 className="text-2xl font-bold text-red-600">MOTOINFO</h1>
           <nav className="space-x-4">
             <a href="#" className="text-gray-600 hover:text-blue-500">Home</a>
             <a href="#" className="text-gray-600 hover:text-blue-500">Shop</a>
@@ -38,7 +35,7 @@ const [products, setProducts] = useState<DataType[]>([])
 
       <main className="bg-gray-50 min-h-screen">
         <section className="bg-blue-100 text-center py-16">
-          <h2 className="text-4xl font-bold text-blue-800 mb-4">Welcome to Sinsamuth</h2>
+          <h2 className="text-4xl font-bold text-blue-800 mb-4">Welcome to MOTOINFO</h2>
           <p className="text-lg text-blue-700">Your one-stop shop for everyday essentials</p>
         </section>
 
@@ -49,7 +46,13 @@ const [products, setProducts] = useState<DataType[]>([])
               <div key={product.id} className="bg-white rounded-lg shadow p-4">
                 <img src={product.image} alt={product.name} className="w-full h-64 object-cover rounded" />
                 <h4 className="mt-4 text-lg font-semibold text-black">{product.name}</h4>
+                <p className="text-sm text-gray-600">{product.description}</p>
                 <p className="text-blue-600 font-bold">{product.price}</p>
+                <div className="flex items-center">
+              <span className="ml-auto bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                {product.category}
+              </span>
+              </div>
               </div>
             ))}
           </div>
@@ -58,7 +61,7 @@ const [products, setProducts] = useState<DataType[]>([])
 
       <footer className="bg-white shadow-inner py-6">
         <div className="container mx-auto text-center text-gray-500 text-sm">
-          &copy; {new Date().getFullYear()} Sinsamuth. All rights reserved.
+          &copy; {new Date().getFullYear()} MOTOINFO. All rights reserved.
         </div>
       </footer>
     </>
